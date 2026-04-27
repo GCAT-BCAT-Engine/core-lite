@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stegverse-core-lite"
+version = "1.0.0"
+description = "Free, minimal, essential primitives for the StegVerse ecosystem"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+Homepage = "https://github.com/GCAT-BCAT-Engine/core-lite"
+Documentation = "https://github.com/GCAT-BCAT-Engine/core-lite/docs"
+Repository = "https://github.com/GCAT-BCAT-Engine/core-lite"
+
+[tool.setuptools.packages.find]
+where = ["src"]
