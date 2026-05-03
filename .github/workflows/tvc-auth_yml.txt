@@ -1,0 +1,39 @@
+# StegVerse TV/TVC Authentication (Lite)
+# Ephemeral secrets, platform-agnostic
+# Version: 0.3.0-lite
+
+name: stegverse-tvc-auth-lite
+version: 0.3.0-lite
+
+principles:
+  - ephemeral_artifacts_only
+  - no_hardcoded_secrets_in_files
+  - no_long_lived_tokens
+  - platform_agnostic_operations
+  - ios_compatible_paths
+
+workflow:
+  1_request:
+    action: tvc_request_token
+    source: TrustVaultController
+
+  2_validate:
+    action: tvc_validate_token
+    ephemeral: true
+    lifetime: 300
+
+  3_bind:
+    action: bind_to_task
+    scope: single_operation
+
+  4_revoke:
+    action: tvc_revoke_token
+    trigger: on_completion | on_timeout | on_error
+
+  5_audit:
+    action: stegdb_write
+    table: "{{org}}_tvc_audit_log"
+
+file_constraints:
+  no_hidden_files: true
+  extension_policy: "use .txt for .yml configs in bundles"

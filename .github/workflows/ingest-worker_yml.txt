@@ -1,0 +1,38 @@
+# StegVerse Core-Lite Ingestion Pipeline
+# Minimal footprint: telemetry + basic governance only
+# No entity bridge, no cost accounting, no deterministic gates
+# Version: 0.3.0-lite
+
+name: stegverse-ingest-lite
+version: 0.3.0-lite
+
+triggers:
+  - webhook: /ingest
+  - queue: stegverse-ingest-queue
+
+steps:
+  1_validate:
+    action: validate_input
+    schema: stegverse-input-lite
+    reject_on_fail: true
+
+  2_auth:
+    action: tvc_authenticate
+    source: TrustVaultController
+    ephemeral: true
+    lifetime: 300
+
+  3_classify:
+    action: classify_payload
+    routes:
+      - telemetry → stegdb_telemetry
+      - governance_check → governance_core
+
+  4_log:
+    action: stegdb_write
+    table: "{{org}}_ingestion_log"
+    org_segregated: true
+
+  5_emit:
+    action: route_to_core
+    target: [telemetry, governance]
