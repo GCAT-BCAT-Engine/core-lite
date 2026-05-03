@@ -1,0 +1,36 @@
+# StegVerse StegDB Schema (Lite)
+# Unified telemetry, org-segregated
+# Version: 0.3.0-lite
+
+namespace: stegverse_telemetry
+version: 0.3.0-lite
+
+tables:
+  {{org}}_ingestion_log:
+    columns:
+      - id: uuid
+      - timestamp: datetime
+      - source: string
+      - payload_hash: string
+      - org: string
+      - tier: string
+      - classification: string
+      - tvc_auth_status: string
+      - routing_decision: string
+    indexes:
+      - timestamp DESC
+      - org, timestamp
+
+  {{org}}_state_transitions:
+    columns:
+      - id: uuid
+      - timestamp: datetime
+      - entity_id: string
+      - from_state: string
+      - to_state: string
+      - gate_result: string
+      - confidence: float
+      - policy_strictness_applied: float
+    indexes:
+      - entity_id, timestamp
+      - gate_result, timestamp
