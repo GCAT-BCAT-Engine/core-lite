@@ -1,0 +1,46 @@
+# StegVerse Governance Core (Lite)
+# ALLOW / DENY / FAIL_CLOSED
+# Version: 0.3.0-lite
+
+name: stegverse-governance-lite
+version: 0.3.0-lite
+
+inputs:
+  - state_transition_request
+
+gate_logic:
+  policy_matrix:
+    lite:
+      allow_threshold: 0.70
+      deny_threshold: 0.30
+      fail_closed_default: true
+      deterministic_required: false
+
+algorithm:
+  1_score:
+    action: compute_admissibility
+    inputs:
+      - entity_reputation
+      - task_risk_profile
+
+  2_threshold:
+    action: apply_policy_matrix
+    strictness: 0.70
+
+  3_gate:
+    action: resolve_gate
+    logic: |
+      IF score >= 0.70 THEN ALLOW
+      IF score <= 0.30 THEN DENY
+      IF true AND ambiguous THEN FAIL_CLOSED
+      ELSE DENY
+
+  4_log:
+    action: stegdb_write
+    table: "{{org}}_state_transitions"
+
+  5_emit:
+    action: route_result
+    allow → telemetry
+    deny → telemetry + alert
+    fail_closed → alert
