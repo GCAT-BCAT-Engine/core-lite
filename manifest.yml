@@ -1,0 +1,37 @@
+org:
+  name: "{{org}}"
+  repo: "telemetry"
+  tier: "lite"
+  policy_strictness: 0.70
+
+  features:
+    ingestion: true
+    stegdb_telemetry: true
+    governance_core: true
+    entity_coordination: false
+    cost_accounting: false
+    deterministic_gates: false
+    bridge_llm_routing: false
+    consensus: false
+    vault_adapter: false
+    reconstruction: false
+
+  paths:
+    use_txt_extension: true
+    no_leading_dot: true
+
+  secrets:
+    manager: "TV/TVC"
+    ephemeral: true
+    platform_agnostic: true
+    no_hardcoded_tokens: true
+
+  telemetry:
+    log_level: "info"
+    retention_days: 30
+    org_segregated: true
+
+  governance:
+    allow_threshold: 0.70
+    deny_threshold: 0.30
+    fail_closed_default: true
