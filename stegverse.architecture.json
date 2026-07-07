@@ -1,0 +1,39 @@
+{
+  "schema_version": "stegverse.architecture.v0.1",
+  "repo_id": "GCAT-BCAT-Engine/core-lite",
+  "enforcement": "warn",
+  "expected_structure": {
+    "config/": {
+      "required": true
+    },
+    "config/stegdb-schema.yml": {
+      "required": true
+    },
+    ".github/": {
+      "required": false,
+      "subdirs": {
+        "workflows/": {
+          "required": false
+        }
+      }
+    }
+  },
+  "migration_rules": {
+    "review_needed_path": "review_needed/",
+    "legacy_path": "legacy/",
+    "auto_migrate": false,
+    "require_approval": true,
+    "syntax_issue_patterns": []
+  },
+  "file_rules": {
+    "forbidden_patterns": [],
+    "naming_conventions": {
+      "python": "snake_case"
+    }
+  },
+  "non_claims": {
+    "runtime_authority": false,
+    "execution_authority": false,
+    "cross_repo_mutation_authority": false
+  }
+}
